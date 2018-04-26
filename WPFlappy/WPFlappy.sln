@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27428.2037
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WPFlappy", "WPFlappy\WPFlappy.csproj", "{A1BD2056-98D2-4EF8-88D8-3C3C22D350C5}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WPFlappy", "WPFlappy.csproj", "{A1BD2056-98D2-4EF8-88D8-3C3C22D350C5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

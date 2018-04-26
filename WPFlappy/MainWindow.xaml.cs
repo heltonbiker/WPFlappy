@@ -28,7 +28,7 @@ namespace WPFlappy
 
 		void Render()
 		{
-			frame.Source = _engine.GetNextFrame();
+			//frame.Source = _engine.GetNextFrame();
 		}
 	}
 }

@@ -1,0 +1,54 @@
+﻿<Window x:Class="WPFlappy.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        Title="WPFlappy"
+		SizeToContent="WidthAndHeight"
+		WindowStartupLocation="CenterScreen">
+
+	<Grid x:Name="gamecontainer">
+		<Grid x:Name="gamescreen">
+			<Grid x:Name="sky"> <!-- class="animated" -->
+				<Grid x:Name="flyarea">
+					<Grid x:Name="ceiling"/> <!-- class="animated" -->
+					
+					<!-- This is the flying and pipe area container -->
+					<Grid x:Name="player"/> <!-- class="bird animated" -->
+
+					<Grid x:Name="bigscore"/>
+
+					<Grid x:Name="splash"/>
+
+					<Grid x:Name="scoreboard">
+						<Grid x:Name="medal"/>
+						<Grid x:Name="currentscore"/>
+						<Grid x:Name="highscore"/>
+						<Grid x:Name="replay">
+							<Image Source="assets/replay.png" Stretch="None"/> <!-- alt="replay" -->
+						</Grid>
+					</Grid>
+
+					<!-- Pipes go here! -->
+				</Grid>
+			</Grid>
+			<Grid x:Name="land"> <!-- class="animated" -->
+				<Grid x:Name="debug"/>
+			</Grid>
+		</Grid>
+	</Grid>
+
+
+	<!--
+	<Image
+		x:Name="frame"
+		RenderOptions.BitmapScalingMode="NearestNeighbor"
+		RenderOptions.EdgeMode="Aliased"
+		UseLayoutRounding="True"
+		SnapsToDevicePixels="True"
+		Stretch="None"
+	/>
+	-->
+
+</Window>

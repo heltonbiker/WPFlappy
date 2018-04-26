@@ -88,6 +88,13 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <None Include="assets\font_big.psd" />
+    <None Include="assets\font_small.psd" />
+    <None Include="assets\sounds\sfx_die.ogg" />
+    <None Include="assets\sounds\sfx_hit.ogg" />
+    <None Include="assets\sounds\sfx_point.ogg" />
+    <None Include="assets\sounds\sfx_swooshing.ogg" />
+    <None Include="assets\sounds\sfx_wing.ogg" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -95,6 +102,43 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="assets\bird.png" />
+    <Resource Include="assets\ceiling.png" />
+    <Resource Include="assets\font_big_0.png" />
+    <Resource Include="assets\font_big_1.png" />
+    <Resource Include="assets\font_big_2.png" />
+    <Resource Include="assets\font_big_3.png" />
+    <Resource Include="assets\font_big_4.png" />
+    <Resource Include="assets\font_big_5.png" />
+    <Resource Include="assets\font_big_6.png" />
+    <Resource Include="assets\font_big_7.png" />
+    <Resource Include="assets\font_big_8.png" />
+    <Resource Include="assets\font_big_9.png" />
+    <Resource Include="assets\font_small_0.png" />
+    <Resource Include="assets\font_small_1.png" />
+    <Resource Include="assets\font_small_2.png" />
+    <Resource Include="assets\font_small_3.png" />
+    <Resource Include="assets\font_small_4.png" />
+    <Resource Include="assets\font_small_5.png" />
+    <Resource Include="assets\font_small_6.png" />
+    <Resource Include="assets\font_small_7.png" />
+    <Resource Include="assets\font_small_8.png" />
+    <Resource Include="assets\font_small_9.png" />
+    <Resource Include="assets\land.png" />
+    <Resource Include="assets\medal_bronze.png" />
+    <Resource Include="assets\medal_gold.png" />
+    <Resource Include="assets\medal_platinum.png" />
+    <Resource Include="assets\medal_silver.png" />
+    <Resource Include="assets\pipe-down.png" />
+    <Resource Include="assets\pipe-up.png" />
+    <Resource Include="assets\pipe.png" />
+    <Resource Include="assets\replay.png" />
+    <Resource Include="assets\scoreboard.png" />
+    <Resource Include="assets\sky.png" />
+    <Resource Include="assets\splash.png" />
+    <Resource Include="assets\thumb.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
