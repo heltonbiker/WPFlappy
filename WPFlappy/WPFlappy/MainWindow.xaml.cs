@@ -17,7 +17,7 @@ namespace WPFlappy
 {
 	public partial class MainWindow : Window
 	{
-		WPFlappyModel _model = new WPFlappyModel();
+		GameEngine _engine = new GameEngine(new FloppyGame());
 
 		public MainWindow()
 		{
@@ -28,7 +28,7 @@ namespace WPFlappy
 
 		void Render()
 		{
-			frame.Source = _model.GetNextFrame();
+			frame.Source = _engine.GetNextFrame();
 		}
 	}
 }
