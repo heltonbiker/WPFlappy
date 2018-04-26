@@ -24,11 +24,19 @@ namespace WPFlappy
 			InitializeComponent();
 
 			CompositionTarget.Rendering += (a, b) => Render();
+
+			PreviewKeyDown += Input;
+		}
+
+		void Input(object sender, KeyEventArgs e)
+		{
+			_engine.KeyInput(e.Key);
 		}
 
 		void Render()
 		{
-			//frame.Source = _engine.GetNextFrame();
+			//frame.Source = 
+			_engine.GetNextFrame();
 		}
 	}
 }

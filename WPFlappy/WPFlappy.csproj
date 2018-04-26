@@ -140,5 +140,8 @@
     <Resource Include="assets\splash.png" />
     <Resource Include="assets\thumb.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="main.js" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

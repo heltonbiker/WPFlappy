@@ -1,6 +1,9 @@
 ﻿using System;
+using System.Collections.Concurrent;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Windows;
+using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 
@@ -38,7 +41,7 @@ namespace WPFlappy
 
 			double lag = elapsed;
 			
-			_game.Input();
+			_game.Input(InputQueue);
 
 			while (lag >= UPDATE_STEP)
 			{
@@ -53,7 +56,12 @@ namespace WPFlappy
 			return frame;
 		}
 
+		ConcurrentQueue<object> InputQueue = new ConcurrentQueue<object>();
 
+		internal void KeyInput(Key key)
+		{
+			InputQueue.Enqueue(key);
+		}
 
 		ImageSource Render()
 		{

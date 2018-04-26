@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Windows;
 using System.Windows.Media;
 
@@ -8,9 +9,13 @@ namespace WPFlappy
 	{
 		double _x = 0;
 
-		public void Input()
+		public void Input(ConcurrentQueue<object> commandQueue)
 		{
-			
+			while (commandQueue.Count > 0 && 
+				   commandQueue.TryDequeue(out object result))
+			{
+				Console.WriteLine(result);
+			}
 		}
 
 		public void Draw(DrawingContext cx)
