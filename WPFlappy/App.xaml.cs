@@ -13,5 +13,14 @@ namespace WPFlappy
 	/// </summary>
 	public partial class App : Application
 	{
+		protected override void OnStartup(StartupEventArgs e)
+		{
+			MainWindow = new GameWindow()
+			{
+				DataContext = new GameEngine(new FlappyGame())
+			};
+
+			MainWindow.Show();
+		}
 	}
 }

@@ -4,19 +4,14 @@ using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Media;
+using System.ComponentModel;
+using GalaSoft.MvvmLight;
+using GalaSoft.MvvmLight.CommandWpf;
 
 namespace WPFlappy
 {
-	public class FlappyGame : IGame
+	public class FlappyGame : ObservableObject
 	{
-		readonly FlappyControl _control;
-
-		public FlappyGame(FlappyControl control)
-		{
-			_control = control;
-		}
-
-
 		
 		double _lastMillis = 0;
 		const long UPDATE_STEP = 1;
@@ -28,7 +23,10 @@ namespace WPFlappy
 
 		double _x = 0;
 
+		double gravity = 0.25;
 		double velocity = 0;
+		double position = 180;
+
 		double jump = -4.6;
 
 
@@ -60,9 +58,9 @@ namespace WPFlappy
 			}
 		}
 
-		public void Draw(DrawingContext cx)
+		public void Draw()
 		{
-			cx.DrawGeometry(Brushes.Black, null, new EllipseGeometry(new Point(_x, 300), 10, 10));
+			RaisePropertyChanged(null);
 		}
 
 		public void Update(double currentMillis)
@@ -92,100 +90,112 @@ namespace WPFlappy
 				updatePipes();			
 		}
 
-		private void updatePipes()
+		void gameloop()
 		{
-			throw new NotImplementedException();
-		}
+			//var player = $("#player");
 
-		private void gameloop()
-		{
-			/*
-			var player = $("#player");
-
-			//update the player speed/position
+			////update the player speed/position
 			velocity += gravity;
 			position += velocity;
 
-			//update the player
-			updatePlayer(player);
+			////update the player
+			//updatePlayer(player);
 
-			//create the bounding box
-			var box = document.getElementById('player').getBoundingClientRect();
-			var origwidth = 34.0;
-			var origheight = 24.0;
+			////create the bounding box
+			//var box = document.getElementById('player').getBoundingClientRect();
+			//var origwidth = 34.0;
+			//var origheight = 24.0;
 
-			var boxwidth = origwidth - (Math.sin(Math.abs(rotation) / 90) * 8);
-			var boxheight = (origheight + box.height) / 2;
-			var boxleft = ((box.width - boxwidth) / 2) + box.left;
-			var boxtop = ((box.height - boxheight) / 2) + box.top;
-			var boxright = boxleft + boxwidth;
-			var boxbottom = boxtop + boxheight;
+			//var boxwidth = origwidth - (Math.sin(Math.abs(rotation) / 90) * 8);
+			//var boxheight = (origheight + box.height) / 2;
+			//var boxleft = ((box.width - boxwidth) / 2) + box.left;
+			//var boxtop = ((box.height - boxheight) / 2) + box.top;
+			//var boxright = boxleft + boxwidth;
+			//var boxbottom = boxtop + boxheight;
 
-			//if we're in debug mode, draw the bounding box
+			////if we're in debug mode, draw the bounding box
 
-			//did we hit the ground?
-			if (box.bottom >= $("#land").offset().top)
-			{
-				playerDead();
-				return;
-			}
+			////did we hit the ground?
+			//if (box.bottom >= $("#land").offset().top)
+			//{
+			//	playerDead();
+			//	return;
+			//}
 
-			//have they tried to escape through the ceiling? :o
-			var ceiling = $("#ceiling");
-			if (boxtop <= (ceiling.offset().top + ceiling.height()))
-				position = 0;
+			////have they tried to escape through the ceiling? :o
+			//var ceiling = $("#ceiling");
+			//if (boxtop <= (ceiling.offset().top + ceiling.height()))
+			//	position = 0;
 
-			//we can't go any further without a pipe
-			if (pipes[0] == null)
-				return;
+			////we can't go any further without a pipe
+			//if (pipes[0] == null)
+			//	return;
 
-			//determine the bounding box of the next pipes inner area
-			var nextpipe = pipes[0];
-			var nextpipeupper = nextpipe.children(".pipe_upper");
+			////determine the bounding box of the next pipes inner area
+			//var nextpipe = pipes[0];
+			//var nextpipeupper = nextpipe.children(".pipe_upper");
 
-			var pipetop = nextpipeupper.offset().top + nextpipeupper.height();
-			var pipeleft = nextpipeupper.offset().left - 2; // for some reason it starts at the inner pipes offset, not the outer pipes.
-			var piperight = pipeleft + pipewidth;
-			var pipebottom = pipetop + pipeheight;
+			//var pipetop = nextpipeupper.offset().top + nextpipeupper.height();
+			//var pipeleft = nextpipeupper.offset().left - 2; // for some reason it starts at the inner pipes offset, not the outer pipes.
+			//var piperight = pipeleft + pipewidth;
+			//var pipebottom = pipetop + pipeheight;
 
-			if (debugmode)
-			{
-				var boundingbox = $("#pipebox");
-				boundingbox.css('left', pipeleft);
-				boundingbox.css('top', pipetop);
-				boundingbox.css('height', pipeheight);
-				boundingbox.css('width', pipewidth);
-			}
+			//if (debugmode)
+			//{
+			//	var boundingbox = $("#pipebox");
+			//	boundingbox.css('left', pipeleft);
+			//	boundingbox.css('top', pipetop);
+			//	boundingbox.css('height', pipeheight);
+			//	boundingbox.css('width', pipewidth);
+			//}
 
-			//have we gotten inside the pipe yet?
-			if (boxright > pipeleft)
-			{
-				//we're within the pipe, have we passed between upper and lower pipes?
-				if (boxtop > pipetop && boxbottom < pipebottom)
-				{
-					//yeah! we're within bounds
+			////have we gotten inside the pipe yet?
+			//if (boxright > pipeleft)
+			//{
+			//	//we're within the pipe, have we passed between upper and lower pipes?
+			//	if (boxtop > pipetop && boxbottom < pipebottom)
+			//	{
+			//		//yeah! we're within bounds
 
-				}
-				else
-				{
-					//no! we touched the pipe
-					playerDead();
-					return;
-				}
-			}
+			//	}
+			//	else
+			//	{
+			//		//no! we touched the pipe
+			//		playerDead();
+			//		return;
+			//	}
+			//}
 
 
-			//have we passed the imminent danger?
-			if (boxleft > piperight)
-			{
-				//yes, remove it
-				pipes.splice(0, 1);
+			////have we passed the imminent danger?
+			//if (boxleft > piperight)
+			//{
+			//	//yes, remove it
+			//	pipes.splice(0, 1);
 
-				//and score a point
-				playerScore();
-			}
+			//	//and score a point
+			//	playerScore();
+			//}
+		}
+
+
+		void updatePipes()
+		{
+			/*
+		   //Do any pipes need removal?
+		   $(".pipe").filter(function() { return $(this).position().left <= -100; }).remove()
+
+		   //add a new pipe (top height + bottom height  + pipeheight == flyArea) and put it in our tracker
+					var padding = 80;
+					var constraint = flyArea - pipeheight - (padding * 2); //double padding (for top and bottom)
+					var topheight = Math.floor((Math.random() * constraint) + padding); //add lower padding
+					var bottomheight = (flyArea - pipeheight) - topheight;
+					var newpipe = $('<div class="pipe animated"><div class="pipe_upper" style="height: ' + topheight + 'px;"></div><div class="pipe_lower" style="height: ' + bottomheight + 'px;"></div></div>');
+		   $("#flyarea").append(newpipe);
+					pipes.push(newpipe);
 			*/
 		}
+
 
 		void screenClick()
 		{
@@ -248,6 +258,9 @@ namespace WPFlappy
 		{
 			throw new NotImplementedException();
 		}
+
+
+		public ICommand ClickCommand => new RelayCommand(screenClick);
 	}
 
 	enum states

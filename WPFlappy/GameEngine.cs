@@ -2,6 +2,8 @@
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Threading;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
@@ -11,62 +13,41 @@ namespace WPFlappy
 {
 	internal class GameEngine
 	{
-		private IGame _game;
-
-		public GameEngine(IGame game)
-		{
-			_game = game;
-		}
-
-
-
-
-
-		const int W = 800;
-		const int H = 600;
+		CancellationTokenSource _cancel;
 
 		Stopwatch sw = Stopwatch.StartNew();
 
 		double _currentMillis = 0;
 
 
-
-		internal ImageSource GetNextFrame()
-		{
-			_currentMillis = sw.Elapsed.TotalMilliseconds;
-			
-			_game.Input(InputQueue);
-
-			_game.Update(_currentMillis);
-
-			var frame = Render();
-
-			return frame;
-		}
-
 		ConcurrentQueue<object> InputQueue = new ConcurrentQueue<object>();
 
-		internal void KeyInput(Key key)
+		public FlappyGame Game { get; }
+
+
+
+		// CONSTRUTOR
+		public GameEngine(FlappyGame game)
 		{
-			InputQueue.Enqueue(key);
+			Game = game;
+
+			Task.Run(() => Loop());
 		}
 
-		ImageSource Render()
+		private void Loop()
 		{
-			var dv = new DrawingVisual();
+			_cancel = new CancellationTokenSource();
 
-			using (DrawingContext cx = dv.RenderOpen())
+			while (!_cancel.IsCancellationRequested)
 			{
-				cx.PushTransform(new TranslateTransform(W * 0.5, H));
-				cx.PushTransform(new ScaleTransform(1, -1));
-				_game.Draw(cx);
+				_currentMillis = sw.Elapsed.TotalMilliseconds;
+
+				Game.Input(InputQueue);
+
+				Game.Update(_currentMillis);
+
+				Game.Draw();
 			}
-
-			var frame = new RenderTargetBitmap(W, H, 96, 96, PixelFormats.Pbgra32);
-			frame.Render(dv);
-			frame.Freeze();
-
-			return frame;
 		}
 	}
 }

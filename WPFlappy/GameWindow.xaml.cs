@@ -15,12 +15,9 @@ using System.Windows.Shapes;
 
 namespace WPFlappy
 {
-	/// <summary>
-	/// Interaction logic for FlappyControl.xaml
-	/// </summary>
-	public partial class FlappyControl : UserControl
+	public partial class GameWindow : Window
 	{
-		public FlappyControl()
+		public GameWindow()
 		{
 			InitializeComponent();
 		}
