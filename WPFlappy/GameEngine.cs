@@ -28,28 +28,16 @@ namespace WPFlappy
 		Stopwatch sw = Stopwatch.StartNew();
 
 		double _currentMillis = 0;
-		double _lastMillis = 0;
-
-		const long UPDATE_STEP = 1;
 
 
 
 		internal ImageSource GetNextFrame()
 		{
 			_currentMillis = sw.Elapsed.TotalMilliseconds;
-			double elapsed = _currentMillis - _lastMillis;
-
-			double lag = elapsed;
 			
 			_game.Input(InputQueue);
 
-			while (lag >= UPDATE_STEP)
-			{
-				_game.Update(_currentMillis);
-				lag -= UPDATE_STEP;
-			}
-
-			_lastMillis = _currentMillis;
+			_game.Update(_currentMillis);
 
 			var frame = Render();
 

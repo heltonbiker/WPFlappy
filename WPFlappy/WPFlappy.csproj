@@ -54,7 +54,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="FloppyGame.cs" />
+    <Compile Include="FlappyGame.cs" />
     <Compile Include="GameEngine.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -69,10 +69,17 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="FlappyControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="FlappyControl.xaml.cs">
+      <DependentUpon>FlappyControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -90,11 +97,6 @@
     </EmbeddedResource>
     <None Include="assets\font_big.psd" />
     <None Include="assets\font_small.psd" />
-    <None Include="assets\sounds\sfx_die.ogg" />
-    <None Include="assets\sounds\sfx_hit.ogg" />
-    <None Include="assets\sounds\sfx_point.ogg" />
-    <None Include="assets\sounds\sfx_swooshing.ogg" />
-    <None Include="assets\sounds\sfx_wing.ogg" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -141,7 +143,22 @@
     <Resource Include="assets\thumb.png" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="main.js" />
+    <Content Include="assets\sounds\sfx_die.wav">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="assets\sounds\sfx_hit.wav">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="assets\sounds\sfx_point.wav">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="assets\sounds\sfx_swooshing.wav">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="assets\sounds\sfx_wing.wav">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <None Include="main.js" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

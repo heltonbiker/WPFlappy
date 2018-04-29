@@ -15,29 +15,14 @@ using System.Windows.Shapes;
 
 namespace WPFlappy
 {
-	public partial class MainWindow : Window
+	/// <summary>
+	/// Interaction logic for FlappyControl.xaml
+	/// </summary>
+	public partial class FlappyControl : UserControl
 	{
-		GameEngine _engine;
-
-		public MainWindow()
+		public FlappyControl()
 		{
 			InitializeComponent();
-
-			 _engine = new GameEngine(new FlappyGame(this.gamecontainer));
-
-			CompositionTarget.Rendering += (a, b) => Render();
-
-			PreviewKeyDown += Input;
-		}
-
-		void Input(object sender, KeyEventArgs e)
-		{
-			_engine.KeyInput(e.Key);
-		}
-
-		void Render()
-		{
-			_engine.GetNextFrame();
 		}
 	}
 }
