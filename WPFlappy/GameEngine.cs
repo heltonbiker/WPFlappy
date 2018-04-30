@@ -11,7 +11,7 @@ using System.Windows.Media.Imaging;
 
 namespace WPFlappy
 {
-	internal class GameEngine
+	internal class GameEngine : IDisposable
 	{
 		CancellationTokenSource _cancel;
 
@@ -19,8 +19,6 @@ namespace WPFlappy
 
 		double _currentMillis = 0;
 
-
-		ConcurrentQueue<object> InputQueue = new ConcurrentQueue<object>();
 
 		public FlappyGame Game { get; }
 
@@ -34,7 +32,7 @@ namespace WPFlappy
 			Task.Run(() => Loop());
 		}
 
-		private void Loop()
+		void Loop()
 		{
 			_cancel = new CancellationTokenSource();
 
@@ -42,12 +40,18 @@ namespace WPFlappy
 			{
 				_currentMillis = sw.Elapsed.TotalMilliseconds;
 
-				Game.Input(InputQueue);
+				//Game.Input(InputQueue);
 
 				Game.Update(_currentMillis);
 
 				Game.Draw();
 			}
+		}
+
+		public void Dispose()
+		{
+			_cancel.Cancel();
+			_cancel.Token.WaitHandle.WaitOne();
 		}
 	}
 }

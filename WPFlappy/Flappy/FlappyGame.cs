@@ -7,6 +7,7 @@ using System.Media;
 using System.ComponentModel;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.CommandWpf;
+using System.Collections.Generic;
 
 namespace WPFlappy
 {
@@ -23,40 +24,17 @@ namespace WPFlappy
 
 		double _x = 0;
 
-		double gravity = 0.25;
-		double velocity = 0;
-		double position = 180;
+		double ceiling = 400;  //////////////////
 
-		double jump = -4.6;
-
+		List<Pipe> pipes = new List<Pipe>();
+		Player player = new Player();
 
 
-		SoundPlayer soundJump =   new SoundPlayer("assets/sounds/sfx_wing.wav");
 		SoundPlayer soundScore =  new SoundPlayer("assets/sounds/sfx_point.wav");
 		SoundPlayer soundHit =    new SoundPlayer("assets/sounds/sfx_hit.wav");
 		SoundPlayer soundDie =    new SoundPlayer("assets/sounds/sfx_die.wav");
 		SoundPlayer soundSwoosh = new SoundPlayer("assets/sounds/sfx_swooshing.wav");
 
-
-		public void Input(ConcurrentQueue<object> commandQueue)
-		{
-			while (commandQueue.Count > 0 && 
-				   commandQueue.TryDequeue(out object result))
-			{
-				if (result is Key key)
-				{
-					switch (key)
-					{
-						case Key.Space:
-							if (currentstate == states.ScoreScreen)
-								Replay();
-							else
-								screenClick();
-							break;
-					}
-				}
-			}
-		}
 
 		public void Draw()
 		{
@@ -92,40 +70,18 @@ namespace WPFlappy
 
 		void gameloop()
 		{
-			//var player = $("#player");
-
-			////update the player speed/position
-			velocity += gravity;
-			position += velocity;
-
-			////update the player
-			//updatePlayer(player);
-
-			////create the bounding box
-			//var box = document.getElementById('player').getBoundingClientRect();
-			//var origwidth = 34.0;
-			//var origheight = 24.0;
-
-			//var boxwidth = origwidth - (Math.sin(Math.abs(rotation) / 90) * 8);
-			//var boxheight = (origheight + box.height) / 2;
-			//var boxleft = ((box.width - boxwidth) / 2) + box.left;
-			//var boxtop = ((box.height - boxheight) / 2) + box.top;
-			//var boxright = boxleft + boxwidth;
-			//var boxbottom = boxtop + boxheight;
-
-			////if we're in debug mode, draw the bounding box
+			player.Update();
 
 			////did we hit the ground?
-			//if (box.bottom >= $("#land").offset().top)
-			//{
-			//	playerDead();
-			//	return;
-			//}
+			if (player.Bottom < 0)
+			{
+				playerDead();
+				return;
+			}
 
 			////have they tried to escape through the ceiling? :o
-			//var ceiling = $("#ceiling");
-			//if (boxtop <= (ceiling.offset().top + ceiling.height()))
-			//	position = 0;
+			if (player.Top > ceiling) //boxtop <= (ceiling.offset().top + ceiling.height()))
+				player.Position = ceiling;
 
 			////we can't go any further without a pipe
 			//if (pipes[0] == null)
@@ -179,6 +135,7 @@ namespace WPFlappy
 		}
 
 
+
 		void updatePipes()
 		{
 			/*
@@ -199,23 +156,20 @@ namespace WPFlappy
 
 		void screenClick()
 		{
-			if (currentstate == states.GameScreen)
+			switch (currentstate)
 			{
-				playerJump();
-			}
-			else if (currentstate == states.SplashScreen)
-			{
-				startGame();
+				case states.ScoreScreen:
+					Replay();
+					break;
+				case states.GameScreen:
+					player.Jump();
+					break;
+				case states.SplashScreen:
+					startGame();
+					break;
 			}
 		}
 
-		private void playerJump()
-		{
-			velocity = jump;
-			//play jump sound
-			soundJump.Stop();
-			soundJump.Play();
-		}
 
 		private void startGame()
 		{
@@ -238,7 +192,7 @@ namespace WPFlappy
 			loopPipeloop = true;
 
 			//jump from the start!
-			playerJump();
+			player.Jump();
 		}
 
 
@@ -260,7 +214,47 @@ namespace WPFlappy
 		}
 
 
-		public ICommand ClickCommand => new RelayCommand(screenClick);
+		void playerDead()
+		{
+		 //  //stop animating everything!
+		 //  $(".animated").css('animation-play-state', 'paused');
+		 //  $(".animated").css('-webkit-animation-play-state', 'paused');
+
+			////drop the bird to the floor
+			//var playerbottom = $("#player").position().top + $("#player").width(); //we use width because he'll be rotated 90 deg
+			//var floor = flyArea;
+			//var movey = Math.max(0, floor - playerbottom);
+		 //  $("#player").transition({ y: movey + 'px', rotate: 90}, 1000, 'easeInOutCubic');
+
+			////it's time to change states. as of now we're considered ScoreScreen to disable left click/flying
+			//currentstate = states.ScoreScreen;
+
+			////destroy our gameloops
+			//clearInterval(loopGameloop);
+			//clearInterval(loopPipeloop);
+			//loopGameloop = null;
+			//loopPipeloop = null;
+
+			////mobile browsers don't support buzz bindOnce event
+			//if (isIncompatible.any())
+			//{
+			//	//skip right to showing score
+			//	showScore();
+			//}
+			//else
+			//{
+			//	//play the hit sound (then the dead sound) and then show score
+			//	soundHit.play().bindOnce("ended", function() {
+			//		soundDie.play().bindOnce("ended", function() {
+			//			showScore();
+			//		});
+			//	});
+			//}
+		}
+
+
+		public ICommand ClickCommand 
+			=> new RelayCommand(screenClick);
 	}
 
 	enum states

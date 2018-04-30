@@ -13,8 +13,19 @@
 	</UserControl.Resources>
 	
     <Grid>
-		<Grid>
-			
-		</Grid>
+		<StackPanel x:Name="world">
+			<Grid x:Name="sky"></Grid>
+			<Grid x:Name="flyArea"></Grid>
+			<Grid x:Name="ground"></Grid>
+		</StackPanel>
+		<Rectangle Height="24" Width="34">
+			<Rectangle.Fill>
+				<ImageBrush 
+					ImageSource="/assets/bird.png" 
+					Stretch="None"
+					Viewbox="0,0,34,24"
+					ViewboxUnits="Absolute"/>
+			</Rectangle.Fill>
+		</Rectangle>
     </Grid>
 </UserControl>
