@@ -175,6 +175,7 @@
     <Content Include="assets\sounds\sfx_wing.wav">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="main.css" />
     <Content Include="main.js" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
