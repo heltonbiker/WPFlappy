@@ -20,6 +20,8 @@ namespace WPFlappy
 		public GameWindow()
 		{
 			InitializeComponent();
+
+			Closing += (a, b) => (DataContext as IDisposable).Dispose();
 		}
 	}
 }

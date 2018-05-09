@@ -8,6 +8,8 @@ using System.ComponentModel;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.CommandWpf;
 using System.Collections.Generic;
+using NAudio.Wave;
+using NAudio.Vorbis;
 
 namespace WPFlappy
 {

@@ -1,4 +1,6 @@
 ﻿using GalaSoft.MvvmLight;
+using NAudio.Vorbis;
+using NAudio.Wave;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,12 +25,28 @@ namespace WPFlappy
 
 		SoundPlayer soundJump = new SoundPlayer("assets/sounds/sfx_wing.wav");
 
+		WaveStream soundJumpStream = new VorbisWaveReader("assets/sounds/sfx_wing.ogg");
+		WaveOutEvent jumpEvent;
+
+
+		// CONSTRUCTOR
+		public Player()
+		{
+			WaveChannel32 jumpChannel = new WaveChannel32(soundJumpStream);
+			jumpEvent = new WaveOutEvent();
+			jumpEvent.Init(jumpChannel);
+		}
+
+
+
 		public void Jump()
 		{
 			Velocity = jump;
-			
-			soundJump.Stop();
-			soundJump.Play();
+
+			//soundJump.Stop();
+			//soundJump.Play();
+			jumpEvent.Stop();
+			jumpEvent.Play();
 		}
 
 		public void Update()
